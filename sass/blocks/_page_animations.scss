@@ -1,0 +1,114 @@
+.b-right-side .b-title {
+	@include translateX(110%);
+	@include single-transition(transform, 300ms, ease);
+}
+.b-right-side p, .b-right-side h4, .b-right-side h3, .b-right-side ul {
+	@include translateX(110%);
+	@include single-transition(transform, 300ms, ease, 300ms);
+}
+.b-right-side__btn {
+	@include translateX(510%);
+	@include single-transition(transform, 300ms, ease, 300ms);
+}
+.b-right-side .b-right-side__self-diagnosis-list, .b-right-side .b-services-categories {
+	@include translateX(220%);
+	@include single-transition(transform, 300ms, ease, 300ms);
+}
+.b-right-side .b-right-side__self-diagnosis-list {
+	&:last-child {
+		@include single-transition(transform, 300ms, ease, 600ms);
+	}
+}
+.b-right-side  .l-btn {
+	@include translateX(520%);
+	@include transition(transform 300ms ease 400ms, color 300ms ease);
+}
+
+.b-left-side .b-title {
+	@include translateX(-110%);
+	@include single-transition(transform, 300ms, ease);
+}
+.b-left-side p, .b-left-side h4, .b-left-side h3, .b-left-side ul {
+	@include translateX(-110%);
+	@include single-transition(transform, 300ms, ease, 300ms);
+}
+.b-left-side__btn {
+	@include translateX(-510%);
+	@include single-transition(transform, 300ms, ease, 300ms);
+}
+.b-left-side .b-left-side__self-diagnosis-list, .b-left-side .b-services-categories {
+	@include translateX(-220%);
+	@include single-transition(transform, 300ms, ease, 300ms);
+}
+.b-left-side .b-left-side__self-diagnosis-list {
+	&:last-child {
+		@include single-transition(transform, 300ms, ease, 600ms);
+	}
+}
+.b-left-side  .l-btn {
+	@include translateX(-520%);
+	@include transition(transform 300ms ease 400ms, color 300ms ease);
+}
+
+.b-form {
+	.b-form__title {
+		opacity: 0;
+		@include single-transition(all, 300ms, ease);
+	}
+	.wpcf7 {
+		opacity: 0;
+		@include single-transition(all, 300ms, ease, 500ms);
+	}
+	.b-form__additional-info {
+		opacity: 0;
+		@include single-transition(all, 300ms, ease, 1000ms);
+	}
+}
+
+
+.current-page {
+	.b-right-side .b-title {
+		@include translateX(0);
+	}
+	.b-right-side p, .b-right-side h4, .b-right-side h3, .b-right-side ul {
+		@include translateX(0);
+	}
+	.b-right-side__btn {
+		@include translateX(0);
+	}
+	.b-right-side .b-right-side__self-diagnosis-list {
+		@include translateX(0);
+	}
+	.b-right-side  .l-btn {
+		@include translateX(0%);
+	}
+
+	.b-left-side .b-title {
+		@include translateX(0);
+	}
+	.b-left-side p, .b-left-side h4, .b-left-side h3, .b-left-side ul {
+		@include translateX(0);
+	}
+	.b-left-side__btn {
+		@include translateX(0);
+	}
+	.b-left-side .b-left-side__self-diagnosis-list {
+		@include translateX(0);
+	}
+	.b-left-side  .l-btn {
+		@include translateX(0%);
+	}
+
+	.b-form {
+		.b-form__title {
+			opacity: 1;
+		}
+		.wpcf7 {
+			opacity: 1;
+		}
+		.b-form__additional-info {
+			opacity: 1;
+		}
+	}
+
+}

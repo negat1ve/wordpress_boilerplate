@@ -1,0 +1,43 @@
+a.copyright .icon {
+    display: block;
+    width: 17px;
+    height: 17px;
+    position: relative;
+    top: -2px;
+    margin-left: 10px;
+    border-radius: 17px;
+    background-color: $teal;
+    background-image: url(../images/36.png);
+    background-repeat: no-repeat;
+    background-position: 3px 3px;
+}
+a.copyright .icon span {
+    display: block;
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    border-radius: 17px;
+    left: 8px;
+    top: 8px;
+    background-color: $teal;
+    background-image: url(../images/36.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    @include rotate(0deg);
+    z-index: 9002;
+}
+.t {
+    @include single-transition(all, 300ms, ease);
+    z-index: 9002;
+}
+a.copyright:hover .icon {
+    @include rotate(180deg);
+    background-position: -20px -20px;
+}
+a.copyright:hover .icon span{
+    left: 0px;
+    top: 0px;
+    width: 17px;
+    height: 17px;
+    @include rotate(180deg);
+}

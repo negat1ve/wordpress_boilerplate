@@ -1,0 +1,20 @@
+
+
+/* Main */
+
+$webkit-font-smoothing       : true;
+$original_width: 1160px;
+
+/* Fonts */
+
+@include font-face("Century Gothic", font-files("gothic-webfont.ttf", "gothic-webfont.woff", "gothic-webfont.svg"), "gothic-webfont.eot");
+
+$didot: "GFS Didot";
+$century-gothic: "Century Gothic";
+
+
+/* Colors */
+
+$body-color: #fff;
+$teal: #66cccc;
+

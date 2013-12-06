@@ -1,0 +1,13 @@
+
+@mixin sprite-link($sprite, $hover-sprite: null) {
+    display: block;
+    width: image-width("sprites/#{$sprite}.png");
+    height: image-height("sprites/#{$sprite}.png");
+    @include sprites-sprite($sprite);
+
+    @if $hover-sprite != null {
+    	&:hover {
+    		 @include sprites-sprite($hover-sprite);
+    	}
+    }
+}

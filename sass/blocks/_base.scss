@@ -1,0 +1,11 @@
+$default-transition-delay  : false;
+$legacy-support-for-ie8 : true;
+
+@import "compass/support";
+@import "compass/reset";
+@import "compass/css3";
+
+@import "compass/utilities/sprites";
+@import "sprites/*.png";
+
+@include all-sprites-sprites;

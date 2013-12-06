@@ -1,0 +1,307 @@
+@media only screen and (max-width : 1024px) {
+	.l-credits {
+		width: 6%;
+	}
+	.b-nav .menu-item > a {
+		padding: 0 8px;
+	}
+	.b-my-whish-list {
+		font-size: 14px;
+	}
+
+}
+
+@media only screen and (max-width : 875px) {
+	.b-my-whish-list {
+		display: none;
+	}
+}
+
+@media only screen and (max-width : 768px) {
+	.c-wrapper {
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+	}
+	.c-container {
+		top: 81px;
+		bottom: 31px;
+		height: auto;
+		@include box-sizing(border-box);
+		overflow-y: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+	.b-left-side {
+		width: 100%;
+		height: auto;
+	}
+	.b-right-side {
+		width: 100%;
+		padding: 0 10px;
+		height: auto;
+	}
+	.c-header-mobile {
+		position: relative;
+		display: block;
+		width: 100%;
+		height: 80px;
+		background: #66cccc;
+		z-index: 1;
+		border-bottom: 1px solid #fff;
+	}
+	.l-open-menu {
+		position: absolute;
+		display: block;
+		width: 28px;
+		height: 22px;
+		top: 29px;
+		left: 14px;
+		cursor: pointer;
+
+		.l-open-menu__stripe {
+			display: block;
+			width: 28px;
+			height: 4px;
+			background: #fff;
+			margin-bottom: 4px;
+		}
+	}
+	.l-logo {
+		top: 0px;
+		width: 250px;
+		height: 62px;
+		background-size: cover;
+	}
+
+	.b-individual-article {
+		vertical-align: top;
+		padding-bottom: 0;
+	}
+
+	.b-title {
+		font-size: 29px;
+	}
+
+	.b-scroll-section-mobile {
+		display: block;
+	}
+	.c-container_scroll {
+		.b-left-side, .b-right-side {
+			display: none;
+		}
+	}
+	.b-scroll-section {
+		overflow-y: auto;
+	}
+	.b-scroll-section__padding{
+		padding: 25px;
+	}
+
+	.b-scroll-section__scroll-pane {
+		width: auto;
+		height: auto;
+	}
+
+	.b-right-side_no-padding {
+		padding: 0;
+	}
+
+	/* Our Team */
+
+	.b-our-team {
+		position: relative;
+		width: 100%;
+		height: auto;
+		left: 0!important;
+	}
+	.b-our-team__image-contaner-main {
+		position: relative;
+		height: 200px;
+	}
+	.b-our-team__title-container {
+		height: 200px;
+	}
+	.b-our-team__description-container-main {
+		display: none;
+		position: relative;
+		width: 100%;
+		left: 0;
+	}
+	.b-our-team.open {
+		.b-our-team__description-container-main {
+			display: block;
+			width: 100%;
+		}
+	}
+
+	/* Self Diagnosis */
+
+	.b-right-side__self-diagnosis-list {
+		min-width: 205px;
+	}
+
+	/* Beauty Resource */
+
+	.b-site-item_beauty-resource {
+		position: relative;
+		height: 200px;
+	}
+	.b-site-item_beauty-resources_top:hover {
+		height: 200px;
+	}
+	.b-right-side_beauty-resources_bottom:hover {
+		height: 200px;
+	}
+
+	/* Services */
+
+	.b-services-items {
+		position: static;
+		display: none;
+		width: 100%;
+		left: 0;
+	}
+
+	/* Forms */
+
+	.b-form {
+		display: block;
+		padding: 20px 10px 20px 10px;
+		@include box-sizing(border-box);
+		width: auto;
+		height: auto;
+	}
+
+	.wpcf7-form {
+		width: 100%;
+	}
+
+	.b-form__title {
+		text-align: left;
+		font-size: 26px;
+		margin-bottom: 0;
+	}
+
+	.wpcf7-form-control-wrap {
+		width: 100%;
+	}
+
+	.b-form input[type="text"], .b-form input[type="email"] {
+		width: 100%;
+		margin-left: 0;
+	}
+
+	.b-form textarea {
+		width: 100%;
+		margin-left: 0;
+		margin-right: 0;
+	}
+
+	.b-form__send-btn {
+		width: 100%;
+	}
+
+	/* Blog */
+
+	.c-blog__scroll-area {
+		width: 100%;
+		padding: 10px;
+		@include box-sizing(border-box);
+	}
+
+	/* Products */
+
+	.b-products-item {
+		height: 200px;
+	}
+
+	/* Credits */
+
+	.b-credits {
+		top: 81px;
+		bottom: 31px;
+		width: 100%;
+		max-height: none;
+		overflow-y: auto;
+	}
+
+	.b-credits .b-credits__container {
+		padding: 40px 10px 120px 10px;
+	}
+
+	.b-credits .b-credits__copyright {
+		position: static;
+	}
+
+	/* Footer */
+
+	.c-menu-mobile {
+		position: absolute;
+		width: 100%;
+		top: 81px;
+		background: #66cccc;
+		bottom: 31px;
+		text-align: center;
+		padding-top: 20px;
+		overflow-y: auto;
+		-webkit-overflow-scrolling: touch;
+		z-index: 1000;
+	}
+	.nav-menu > li {
+		margin-bottom: 25px;
+	}
+	.nav-menu > li > a {
+		font: 16px/18px $century-gothic;
+		color: #fff;
+		text-transform: uppercase;
+		font-weight: bold;
+	}
+
+	.sub-menu {
+		margin-top: 3px;
+	}
+
+	.sub-menu a {
+		font: 14px/20px $didot;
+		color: #fff;
+	}
+
+	.c-footer {
+		position: fixed;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		height: 30px;
+		border-top: 1px solid #fff;
+		padding: 0 8px;
+		background: #66cccc;
+	}
+	.l-credits {
+		line-height: 30px;
+		color: #fff;
+		width: 100px;
+	}
+	.b-nav {
+		display: none;
+	}
+	.b-socials {
+		margin-top: 8px;
+	}
+	.b-my-whish-list {
+		display: block;
+	}
+	.l-my-whish-list {
+		line-height: 30px;
+		color: #fff;
+	}
+	.b-socials__item_facebook a {
+		@include sprites-sprite(facebook-icon-white);
+	}
+	.b-socials__item_twitter a {
+		@include sprites-sprite(twitter-icon-white);
+	}
+	.b-socials__item_pinterest a {
+		@include sprites-sprite(pinterest-icon-white);
+	}
+}
