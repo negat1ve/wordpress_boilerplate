@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: About
+ * Template Name: Example
  *
  * Description: Twenty Twelve loves the no-sidebar look as much as
  * you do. Use this page template to remove the sidebar from any page.
@@ -15,7 +15,24 @@
  */
 
 get_header(); ?>
-    <?php if ( have_posts() ) : ?>
+    <?php $query = new WP_Query( array( 'post_type' => 'service', 'orderby' => 'menu_order', 'posts_per_page' => 3 ) ); ?>
+        <?php if ( $query->have_posts() ) : ?>
+        <?php while ( $query->have_posts() ) : $query->the_post();?>
+        <div class="b-preview-box-container"> 
+            <a href="<?php the_permalink(); ?>" class="b-preview-box">
+                <?php if ( has_post_thumbnail()) { // check if the post has a Post Thumbnail assigned to it.
+                    the_post_thumbnail('box-image', array('class' => 'b-preview-box_flooring'));
+                } ?>
+                <div class="b-preview-box__header">
+                    <h3 class="b-preview-box__descript"><?php the_title(); ?></h3>
+                </div>
+            </a>
+        </div>
+        <?php endwhile; ?>
+        <?php endif; ?>
+        <?php wp_reset_query(); ?>
+        
+        <?php if ( have_posts() ) : ?>
         <?php while ( have_posts() ) : the_post(); ?>
         <?php $color = get_post_meta($post->ID, 'background_color', true); ?>
         <section class="c-container"<?php if (!empty($color)) echo " style=\"background-color: " . $color ."\""; ?>>
