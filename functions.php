@@ -1,6 +1,8 @@
 <?php
 
-/* Theme Init */
+/**
+ * Theme Init
+ */
 function setup() {
 
 	// Switches default core markup for search form, comment form, and comments
@@ -30,9 +32,11 @@ function setup() {
 add_action( 'after_setup_theme', 'setup' );
 
 
-
+/**
+ * Create new custom post types
+ */
 function add_custom_posts_type() {
-	register_post_type( 'homepage_section',
+	/* register_post_type( 'homepage_section',
 		array(
 			'labels' => array(
 				'name' => 'Homepage Sections',
@@ -134,7 +138,7 @@ function add_custom_posts_type() {
         'rewrite' => true, 
         'label' => 'Services Categories'
         ) 
-    );
+    ); */
 }
 
 add_action( 'init', 'add_custom_posts_type' );
@@ -159,32 +163,8 @@ function scripts_styles() {
 add_action( 'wp_enqueue_scripts', 'scripts_styles' );
 
 /**
- * Creates a nicely formatted and more specific title element text for output
- * in head of document, based on current view.
+ * Menu Walker
  */
-function _wp_title( $title, $sep ) {
-	global $paged, $page;
-
-	if ( is_feed() )
-		return $title;
-
-	// Add the site name.
-	$title .= get_bloginfo( 'name' );
-
-	// Add the site description for the home/front page.
-	$site_description = get_bloginfo( 'description', 'display' );
-	if ( $site_description && ( is_home() || is_front_page() ) )
-		$title = "$title $sep $site_description";
-
-	// Add a page number if necessary.
-	if ( $paged >= 2 || $page >= 2 )
-		$title = "$title $sep " . sprintf( __( 'Page %s', 'twentythirteen' ), max( $paged, $page ) );
-
-	return $title;
-}
-add_filter( 'wp_title', '_wp_title', 10, 2 );
-
-/* Menu Walker */
 class _walker_nav_menu extends Walker_Nav_Menu {
 	var $current_menu_count = null;
 
@@ -252,7 +232,9 @@ class _walker_nav_menu extends Walker_Nav_Menu {
 
 }
 
-/* replace cf7 form submit with button */
+/**
+ * Replace cf7 form submit with button
+ */
 function _wpcf7_submit_button() {
     if(function_exists('wpcf7_remove_shortcode')) {
         wpcf7_remove_shortcode('submit');
@@ -265,7 +247,9 @@ function _wpcf7_submit_button() {
 
 add_action('init','_wpcf7_submit_button');
 
-/* Helper function is_blog() */
+/**
+ * Helper function is_blog()
+ */
 function is_blog () {
 	global  $post;
 	$posttype = get_post_type($post );
