@@ -1,73 +1,11 @@
 <?php
-/**
- * Twenty Thirteen functions and definitions.
- *
- * Sets up the theme and provides some helper functions, which are used in the
- * theme as custom template tags. Others are attached to action and filter
- * hooks in WordPress to change core functionality.
- *
- * When using a child theme (see http://codrpt.wordpress.org/Theme_Development
- * and http://codex.wordpress.org/Child_Themes), you can override certain
- * functions (those wrapped in a function_exists() call) by defining them first
- * in your child theme's functions.php file. The child theme's functions.php
- * file is included before the parent theme's file, so the child theme
- * functions would be used.
- *
- * Functions that are not pluggable (not wrapped in function_exists()) are
- * instead attached to a filter or action hook.
- *
- * For more information on hooks, actions, and filters,
- * see http://codex.wordpress.org/Plugin_API
- *
- * @package WordPress
- * @subpackage Twenty_Thirteen
- * @since Twenty Thirteen 1.0
- */
 
-/**
- * Sets up the content width value based on the theme's design.
- * @see twentythirteen_content_width() for template-specific adjustments.
- */
-if ( ! isset( $content_width ) )
-	$content_width = 604;
-
-/**
- * Twenty Thirteen only works in WordPress 3.6 or later.
- */
-if ( version_compare( $GLOBALS['wp_version'], '3.6-alpha', '<' ) )
-	require get_template_directory() . '/inc/back-compat.php';
-
-/**
- * Sets up theme defaults and registers the various WordPress features that
- * Twenty Thirteen supports.
- *
- * @uses load_theme_textdomain() For translation/localization support.
- * @uses add_editor_style() To add Visual Editor stylesheets.
- * @uses add_theme_support() To add support for automatic feed links, post
- * formats, and post thumbnails.
- * @uses register_nav_menu() To add support for a navigation menu.
- * @uses set_post_thumbnail_size() To set a custom post thumbnail size.
- *
- * @since Twenty Thirteen 1.0
- *
- * @return void
- */
+/* Theme Init */
 function setup() {
-
-	// Adds RSS feed links to <head> for posts and comments.
-	add_theme_support( 'automatic-feed-links' );
 
 	// Switches default core markup for search form, comment form, and comments
 	// to output valid HTML5.
 	add_theme_support( 'html5', array( 'search-form', 'comment-form', 'comment-list' ) );
-
-	/*
-	 * This theme supports all available post formats by default.
-	 * See http://codex.wordpress.org/Post_Formats
-	 */
-	add_theme_support( 'post-formats', array(
-		'aside', 'audio', 'chat', 'gallery', 'image', 'link', 'quote', 'status', 'video'
-	) );
 
 	// This theme uses wp_nav_menu() in one location.
 	register_nav_menu( 'primary', __( 'Primary Menu', 'twentythirteen' ) );
@@ -202,58 +140,7 @@ function add_custom_posts_type() {
 add_action( 'init', 'add_custom_posts_type' );
 
 /**
- * Returns the Google font stylesheet URL, if available.
- *
- * The use of Source Sans Pro and Bitter by default is localized. For languages
- * that use characters not supported by the font, the font can be disabled.
- *
- * @since Twenty Thirteen 1.0
- *
- * @return string Font stylesheet or empty string if disabled.
- */
-function twentythirteen_fonts_url() {
-	$fonts_url = '';
-
-	/* Translators: If there are characters in your language that are not
-	 * supported by Source Sans Pro, translate this to 'off'. Do not translate
-	 * into your own language.
-	 */
-	$source_sans_pro = _x( 'on', 'Source Sans Pro font: on or off', 'twentythirteen' );
-
-	/* Translators: If there are characters in your language that are not
-	 * supported by Bitter, translate this to 'off'. Do not translate into your
-	 * own language.
-	 */
-	$bitter = _x( 'on', 'Bitter font: on or off', 'twentythirteen' );
-
-	if ( 'off' !== $source_sans_pro || 'off' !== $bitter ) {
-		$font_families = array();
-
-		if ( 'off' !== $source_sans_pro )
-			$font_families[] = 'Oswald:300';
-
-		if ( 'off' !== $bitter )
-			$font_families[] = 'Libre+Baskerville:400,400italic';
-
-		if ( 'off' !== $bitter )
-			$font_families[] = 'Open+Sans:400,700,600';
-
-		$query_args = array(
-			'family' => implode( '|', $font_families ),
-		);
-		$fonts_url = add_query_arg( $query_args, "//fonts.googleapis.com/css" );
-	}
-
-	return $fonts_url;
-}
-
-
-/**
  * Enqueues scripts and styles for front end.
- *
- * @since Twenty Thirteen 1.0
- *
- * @return void
  */
 function scripts_styles() {
 	wp_deregister_script( 'jquery' );
@@ -274,14 +161,8 @@ add_action( 'wp_enqueue_scripts', 'scripts_styles' );
 /**
  * Creates a nicely formatted and more specific title element text for output
  * in head of document, based on current view.
- *
- * @since Twenty Thirteen 1.0
- *
- * @param string $title Default title text for current view.
- * @param string $sep Optional separator.
- * @return string The filtered title.
  */
-function twentythirteen_wp_title( $title, $sep ) {
+function _wp_title( $title, $sep ) {
 	global $paged, $page;
 
 	if ( is_feed() )
@@ -301,28 +182,92 @@ function twentythirteen_wp_title( $title, $sep ) {
 
 	return $title;
 }
-add_filter( 'wp_title', 'twentythirteen_wp_title', 10, 2 );
+add_filter( 'wp_title', '_wp_title', 10, 2 );
 
-/**
- * Registers two widget areas.
- *
- * @since Twenty Thirteen 1.0
- *
- * @return void
- */
-function twentythirteen_widgets_init() {
-	register_sidebar( array(
-		'name'          => 'Credits',
-		'id'            => 'credits',
-		'before_widget' => '',
-		'after_widget'  => '',
-		'before_title'  => '<h3>',
-		'after_title'   => '</h3>',
-	) );
-}
-add_action( 'widgets_init', 'twentythirteen_widgets_init' );
+/* Menu Walker */
+class _walker_nav_menu extends Walker_Nav_Menu {
+	var $current_menu_count = null;
 
-function new_excerpt_more( $more ) {
-	return '[…] <a class="read-more" href="'. get_permalink( get_the_ID() ) . '">More</a>';
+	// add classes to ul sub-menus
+	function start_lvl( &$output, $depth, $args ) {
+	    // depth dependent classes
+	    $indent = ( $depth > 0  ? str_repeat( "\t", $depth ) : '' ); // code indent
+	    $display_depth = ( $depth + 1); // because it counts the first submenu as 0
+	    $classes = array(
+	        'sub-menu',
+	        ( $display_depth % 2  ? 'menu-odd' : 'menu-even' ),
+	        ( $display_depth >=2 ? 'sub-sub-menu' : '' ),
+	        'menu-depth-' . $display_depth
+	        );
+	    $class_names = implode( ' ', $classes );
+
+	    // build html
+	    //
+
+	    $output .= "\n" . $indent . '<div class="b-sub-menu-layout"><ul class="' . $class_names . '">' . "\n";
+	}
+
+	function end_lvl(&$output, $depth=0, $args=array()) {
+		// build html
+	    	$output .= "</ul></div>\n";
+
+    }
+
+	function start_el(&$output, $item, $depth, $args)
+	{
+        global $wp_query;
+        $indent = ( $depth ) ? str_repeat( "\t", $depth ) : '';
+
+        $class_names = $value = '';
+
+        $classes = empty( $item->classes ) ? array() : (array) $item->classes;
+
+        $class_names = join( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $item ) );
+        $class_names = ' class="'. esc_attr( $class_names ) . '"';
+
+        $output .= $indent . '<li id="menu-item-'. $item->ID . '"' . $value . $class_names .'>';
+
+        $attributes  = ! empty( $item->attr_title ) ? ' title="'  	. esc_attr( $item->attr_title 		) .'"' : '';
+        $attributes .= ! empty( $item->target )     ? ' target="' 	. esc_attr( $item->target     		) .'"' : '';
+        $attributes .= ! empty( $item->xfn )        ? ' rel="'    	. esc_attr( $item->xfn        		) .'"' : '';
+        $attributes .= ! empty( $item->url )        ? ' href="'   	. esc_attr( $item->url        		) .'"' : '';
+
+        $prepend = '';
+        $append = '';
+
+        if($depth != 0)
+        {
+        	$description = $append = $prepend = "";
+        }
+
+        $item_output = $args->before;
+        $item_output .= '<a'. $attributes .' data-ajax="true">';
+        $item_output .= $args->link_before .$prepend.apply_filters( 'the_title', $item->title, $item->ID ).$append;
+        $item_output .= $description.$args->link_after;
+        $item_output .= '</a>';
+        $item_output .= $args->after;
+
+        $output .= apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args );
+	}
+
 }
-add_filter( 'excerpt_more', 'new_excerpt_more' );
+
+/* replace cf7 form submit with button */
+function _wpcf7_submit_button() {
+    if(function_exists('wpcf7_remove_shortcode')) {
+        wpcf7_remove_shortcode('submit');
+        remove_action( 'admin_init', 'wpcf7_add_tag_generator_submit', 55 );
+        $fowl_cf7_module = TEMPLATEPATH . '/cf7/submit-button.php';
+        require_once $fowl_cf7_module;
+        wpcf7_add_shortcode( 'submit', 'fowl_wpcf7_submit_shortcode_handler' );
+    }
+}
+
+add_action('init','_wpcf7_submit_button');
+
+/* Helper function is_blog() */
+function is_blog () {
+	global  $post;
+	$posttype = get_post_type($post );
+	return ( ((is_archive()) || (is_author()) || (is_category()) || (is_home()) || (is_single()) || (is_tag())) && ( $posttype == 'post')  ) ? true : false ;
+}
