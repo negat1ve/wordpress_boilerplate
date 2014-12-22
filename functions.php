@@ -255,3 +255,89 @@ function is_blog () {
 	$posttype = get_post_type($post );
 	return ( ((is_archive()) || (is_author()) || (is_category()) || (is_home()) || (is_single()) || (is_tag())) && ( $posttype == 'post')  ) ? true : false ;
 }
+
+/**
+ * Filters wp_title to print a neat <title> tag based on what is being viewed.
+ *
+ * @param string $title Default title text for current view.
+ * @param string $sep Optional separator.
+ * @return string The filtered title.
+ */
+function _wp_title( $title, $sep ) {
+	if ( is_feed() ) {
+		return $title;
+	}
+	
+	global $page, $paged;
+
+	// Add the blog name
+	$title .= get_bloginfo( 'name', 'display' );
+
+	// Add the blog description for the home/front page.
+	$site_description = get_bloginfo( 'description', 'display' );
+	if ( $site_description && ( is_home() || is_front_page() ) ) {
+		$title .= " $sep $site_description";
+	}
+
+	// Add a page number if necessary:
+	if ( ( $paged >= 2 || $page >= 2 ) && ! is_404() ) {
+		$title .= " $sep " . sprintf( __( 'Page %s', '_s' ), max( $paged, $page ) );
+	}
+
+	return $title;
+}
+add_filter( 'wp_title', '_wp_title', 10, 2 );
+
+
+add_action('wp_head','add_ajaxurl');
+function add_ajaxurl() {
+  ?>
+  <script type="text/javascript">
+    var ajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';
+  </script>
+  <?php
+}
+
+
+//add_action('wp_ajax_get_states', 'get_states_callback');
+//add_action('wp_ajax_nopriv_get_states', 'get_states_callback');
+
+/* 
+
+add_action('wpcf7_before_send_mail', 'monadnock_wpcf7_before_send_mail');
+function monadnock_wpcf7_before_send_mail($form) {
+	$id = $form->id; // get form ID
+	if($id == 601) {
+	    $wpcf7 = WPCF7_ContactForm::get_current(); // get current object
+	    $submission = WPCF7_Submission::get_instance(); // get current submission instance
+	    $data = $submission->get_posted_data(); // get posted data
+	 
+	    if(empty($data)) return; // return nothing, let cf7 handle validations
+
+	    $wp_session = WP_Session::get_instance();
+
+	    $samples_order = "";
+
+		foreach ($wp_session['samples_order']->toArray() as $stock_sample) {
+			$samples_order .=  "{$stock_sample['name']} ({$stock_sample['qty']}) \r\n";
+		}
+	    
+	    // $wpcf7->skip_mail = true;
+	 
+	    // Update mail body
+	    $mail = $wpcf7->prop('mail');
+	    $mail = str_replace("[SamplesOrder]", $samples_order, $mail);
+	 
+	    // Update mail2 body, if exists
+	    $mail2 = $wpcf7->prop('mail_2');
+	    $mail2 = str_replace("[SamplesOrder]", $samples_order, $mail2);
+	 
+	    // Save properties
+	    $wpcf7->set_properties(array("mail" => $mail, "mail_2" => $mail2));
+
+	    unset($wp_session['samples_order']);
+	 
+	    // always return wpcf7 object
+	    return $wpcf7;
+	}
+} */
